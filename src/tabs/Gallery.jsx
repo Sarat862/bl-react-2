@@ -28,10 +28,26 @@ export class Gallery extends Component {
     });
   };
 
+  handleClick = () => {
+    this.setState(prev => ({ page: prev.page + 1 }));
+  };
+
   render() {
+    const { items } = this.state;
     return (
       <>
         <SearchForm onChange={this.handleChange} />
+        <Grid>
+          {items.length > 0 &&
+            items.map(({ alt, id, avg_color, src: { large } }) => (
+              <GridItem key={id}>
+                <CardItem color={avg_color}>
+                  <img src={large} alt={alt} />
+                </CardItem>
+              </GridItem>
+            ))}
+        </Grid>
+        <Button onClick={this.handleClick}>Load more</Button>
         <Text textAlign="center">Sorry. There are no images ... 😭</Text>
       </>
     );
